@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+  }
+
+/* body{
+    background-color: blue;
+} */
+
+nav{
+    background-color: goldenrod;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 56px;
+}
+
+nav ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+nav li{
+    list-style: none;
+}
+
+nav li a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 4px 8px;
+}
+
+nav li a:hover{
+    color: black;
+    text-decoration: none;
+}
