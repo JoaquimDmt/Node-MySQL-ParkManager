@@ -1,4 +1,4 @@
-# ParkManager REST API
+# ParkManager API
 #### -- by Joaquim Dimitrov<br /><br />
 
 ## Main features

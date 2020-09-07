@@ -21,12 +21,13 @@ app.use(express.static(publicDirectory)); // make sure express server is using t
 app.use(express.urlencoded({ extended: false }));
 // Parse JSON bodies (as sent by API clients) / pour s'assurer que les données récupérées sont au format JSON
 app.use(express.json());
+
 app.use(cookieParser());
 
 app.set('views', path.join(__dirname, 'views')); // optionnel
 app.set('view engine', 'hbs'); // Indique à Express que le moteur de templating à utiliser est Handlebars.js
 
-// Defining routes
+// defining routes
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/authRouter'));
 
