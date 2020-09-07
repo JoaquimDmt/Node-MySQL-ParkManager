@@ -38,3 +38,14 @@ nav li a:hover{
     color: black;
     text-decoration: none;
 }
+
+/* PROFILE PAGE */
+
+.avatar-ctn{
+    background-color: antiquewhite;
+    text-align: center;
+    /* border-bottom: 1px solid black; */
+}
+.avatar{
+    width: 80%;
+}

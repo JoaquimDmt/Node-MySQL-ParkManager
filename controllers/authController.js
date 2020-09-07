@@ -3,6 +3,49 @@ const db = require("../config/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require('dotenv').config();
+const { promisify } = require("util");
+
+exports.register = (req, res) => {
+    console.log(req.body); //data sent through register form
+
+    const {name, email, password, passwordConfirm} = req.body;
+
+    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
+        if(error){
+            console.log(error);
+        }
+        if (results.length > 0){
+            return res.render('register', {
+                message: 'Cette adresse email est déjà utilisée'
+            })
+        } else if(password !== passwordConfirm){
+            return res.render('register', {
+                message: 'Les mots de passe ne correspondent pas'
+            });
+        }
+
+        try{
+            const salt = await bcrypt.genSalt() //default 10, le salt fait en sorte que si deux users ont le même password ils n'aient pas le même hashedpassword.
+            const hashedPassword = await bcrypt.hash(password, salt);
+            console.log(salt);
+            console.log(hashedPassword);
+
+            db.query('INSERT INTO users SET ?', {nom: name, email: email, mdp: hashedPassword}, (error, results) => {
+                if(error){
+                    console.log(error);
+                } else {
+                    console.log(results);
+                    return res.render('register', {
+                        message: 'Votre compte a bien été créé'
+                    });
+                };
+            })
+        } catch {
+            res.status(500).send();
+        }
+
+    });
+}
 
 exports.login = (req, res) => {
     try {
@@ -50,45 +93,29 @@ exports.login = (req, res) => {
     }
 }
 
-exports.register = (req, res) => {
-    console.log(req.body); //data sent through register form
-
-    const {name, email, password, passwordConfirm} = req.body;
-
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
-        if(error){
-            console.log(error);
-        }
-        if (results.length > 0){
-            return res.render('register', {
-                message: 'Cette adresse email est déjà utilisée'
-            })
-        } else if(password !== passwordConfirm){
-            return res.render('register', {
-                message: 'Les mots de passe ne correspondent pas'
-            });
-        }
-
+exports.isLoggedIn = async (req, res, next) => {
+    // req.message = "Inside middleware";
+    // console.log(req.cookies);
+    if(req.cookies.jwt){
         try{
-            const salt = await bcrypt.genSalt() //default 10, le salt fait en sorte que si deux users ont le même password ils n'aient pas le même hashedpassword.
-            const hashedPassword = await bcrypt.hash(password, salt);
-            console.log(salt);
-            console.log(hashedPassword);
-
-            db.query('INSERT INTO users SET ?', {nom: name, email: email, mdp: hashedPassword}, (error, results) => {
-                if(error){
-                    console.log(error);
-                } else {
-                    console.log(results);
-                    return res.render('register', {
-                        message: 'Votre compte a bien été créé'
-                    });
-                };
-            })
-        } catch {
-            res.status(500).send();
+            //1) verify the token
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+            console.log(decoded);
+            //2) check if the user still exist
+            db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, results) => {
+                console.log(results);
+                if(!results){
+                    return next();
+                }
+                req.user = results[0];
+                return next();
+            });
+        } catch (error){
+            console.log(error);
+            return next();
         }
-
-    });
-
+    } else {
+        next();
+    }
+    //si dans les cookies on retrouve le token jwt et que ce dernier correspond à l'id de l'utilisateur, alors la fonction isLoggedIn renvoie req.user avec ses données. Si le token n'est pas bon alors non.
 }
