@@ -3,6 +3,13 @@ const app = express();
 
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const hbs = require('hbs');
+hbs.registerHelper('ifeq', function (arg1, arg2, options) {
+    if (arg1 === arg2) { 
+        return options.fn(this); 
+    }
+    return options.inverse(this);
+}); // custom helper for handlebars
 
 const db = require("./config/db");
 db.connect( (error) => {
@@ -12,7 +19,6 @@ db.connect( (error) => {
         console.log("Connected to MYSQL...")
     }
 });
-
 
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory)); // make sure express server is using the public directory
@@ -30,6 +36,7 @@ app.set('view engine', 'hbs'); // Indique à Express que le moteur de templating
 // defining routes
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/authRouter'));
+app.use('/admin', require('./routes/adminRouter'));
 
 // starting server
 app.listen(5000, () => {

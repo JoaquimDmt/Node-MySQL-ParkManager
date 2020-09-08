@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', authController.isLoggedIn, (req, res) => {
     // res.send("<h1>Home Page</h1>")
-    res.render('index', {user: req.user});
+    res.render('index', {user: req.user});//pour afficher différement la page index si l'utilisateur est connecté (cf. views/index.hbs)
 });
 
 router.get('/register', (req, res) => {

@@ -58,7 +58,12 @@
         </div>
 
         {{#if message}}
-            <h4 class="alert alert-danger mt-4">{{message}}</h4>
+            <h4 class="alert alert-danger mt-4">
+                {{message}}
+                {{#ifeq message 'Votre compte a bien été créé'}}
+                    ; désormais <a href="/login">connectez-vous</a>.
+                {{/ifeq}}
+            </h4>
         {{/if}}
 
     </div>

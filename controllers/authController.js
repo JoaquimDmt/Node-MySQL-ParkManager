@@ -108,7 +108,7 @@ exports.isLoggedIn = async (req, res, next) => {
             console.log(decoded);
             //2) check if the user still exist : on verifie que l'id décodé dans le token corresponde à l'id de l'utilsateur
             db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, results) => {
-                console.log(results);
+                // console.log(results);
                 //si aucun utilsateur coorespond à ce token alors next
                 if(!results){
                     return next();
