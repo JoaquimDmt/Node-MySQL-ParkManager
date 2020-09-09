@@ -4,9 +4,14 @@
     user-select: none;
   }
 
-/* body{
-    background-color: blue;
-} */
+body{
+    background-image: url("parking.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+/* HEADER */
 
 nav{
     background-color: goldenrod;
@@ -39,6 +44,12 @@ nav li a:hover{
     text-decoration: none;
 }
 
+/* ACCUEIL */
+
+.jumbotron{
+    background: rgba(233, 236, 239, 0.9);
+}
+
 /* PROFILE PAGE */
 
 .avatar-ctn{
@@ -47,4 +58,32 @@ nav li a:hover{
 }
 .avatar{
     width: 80%;
+}
+
+.mail-change{
+    display: inline;
+    width: 50%;
+    padding: 6px 8px 6px 9px;
+}
+
+.card-body br{
+    display: block;
+    margin: 12px 0;
+    content: "";
+}
+
+.deleteConfirmation{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-background{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0, 0.5);
 }

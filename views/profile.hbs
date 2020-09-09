@@ -21,7 +21,7 @@
                 <li><a href="/admin/panel">Admin Panel</a></li>
             {{/ifeq}}
             <li><a href="/profile">Profile</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
+            <li><a class="bg-secondary rounded ml-3" href="/auth/logout">Logout</a></li>
         </ul>
     </nav>
 
@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="car-title">{{user.nom}}</h5>
-                        <p class="card-text">Ma description de developpeur full-stack</p>
+                        <p class="card-text">Compte utilisateur {{user.role}}</p>
                         <a href="#" class="btn btn-primary">joaquim-dimitrov.com</a>
                     </div>
                 </div>
@@ -47,17 +47,47 @@
                         Profile page
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Salut Jojo</h5>
-                        <p class="card-text">frverfdvrfdevrf {{user.email}}</p>
+                        <form action="/profile/update-name" method="POST">
+                            <p class="card-text">
+                                <u>Nom d'utilisateur</u> :
+                                <input id="currentName" name="currentName" type="hidden" value={{user.nom}}>
+                                <input value="{{user.nom}}" type="text" class="form-control mail-change" id="newName" name="newName" required="true">
+                                <input id="userId" name="userId" type="hidden" value={{user.id}}>
+                                <button type="submit" class="btn btn-primary align-top">Modifier</button>
+                            </p>
+                        </form>
+                        <br/>
+                        <form action="/profile/update-email" method="POST">
+                            <p class="card-text">
+                                <u>Adresse Email</u> :
+                                <input id="currentEmail" name="currentEmail" type="hidden" value={{user.email}}>
+                                <input value={{user.email}} type="email" class="form-control mail-change" id="newEmail" name="newEmail" required="true">
+                                <input id="userId" name="userId" type="hidden" value={{user.id}}>
+                                <button type="submit" class="btn btn-primary align-top">Modifier</button>
+                            </p>
+                            {{#if message}}
+                                <h6 class="alert {{message_color}} mt-4">
+                                    {{message}}
+                                </h6>
+                            {{/if}}
+                        </form>
                     </div>
                     <div class="card-footer text-muted">
-                        Node MySQL Project
+                        Supprimer mon compte : <a href="/profile/delete/confirmation" class="text-danger">supprimer</a>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    {{#if deleteConfirmation}}
+        <div class="modal-background"></div>
+        <div class="alert alert-danger deleteConfirmation">
+            <h3>{{deleteConfirmation}}</h3>
+            <div class="text-center mt-3 mb-2"><a class="m-5 text-danger" href="/profile/delete/{{user.id}}">Supprimer</a><a class="m-5" href="/profile">Annuler</a></div>
+        </div>
+    {{/if}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 </body>

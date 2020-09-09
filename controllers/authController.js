@@ -16,27 +16,32 @@ exports.register = (req, res) => {
         }
         if (results.length > 0){
             return res.render('register', {
-                message: 'Cette adresse email est déjà utilisée'
+                message: 'Cette adresse email est déjà utilisée',
+                message_color: 'alert-danger'
             })
         } else if(password !== passwordConfirm){
             return res.render('register', {
-                message: 'Les mots de passe ne correspondent pas'
+                message: 'Les mots de passe ne correspondent pas',
+                message_color: 'alert-danger'
             });
         }
 
+        //if email not already used and password ok then
         try{
             const salt = await bcrypt.genSalt() //default 10, le salt fait en sorte que si deux users ont le même password ils n'aient pas le même hashedpassword.
             const hashedPassword = await bcrypt.hash(password, salt);
             console.log("salt:",salt);
             console.log("hashedPassword:",hashedPassword);
 
+            // create new user
             db.query('INSERT INTO users SET ?', {nom: name, email: email, mdp: hashedPassword}, (error, results) => {
                 if(error){
                     console.log(error);
                 } else {
                     console.log(results);
                     return res.render('register', {
-                        message: 'Votre compte a bien été créé'
+                        message: 'Votre compte a bien été créé',
+                        message_color: 'alert-success'
                     });
                 };
             })
@@ -56,17 +61,18 @@ exports.login = (req, res) => {
             return res.status(400).render('login', {
                 message: 'Veuillez entrer vos identifiants'
             })
-        }
+        }//ne devrait pas avoir lieu car champs "required"
 
         db.query('SELECT * FROM users WHERE email = ?', [email], async(error, results) => {
             if(error){
                 console.log(error);
             }
-            // console.log(results);
+            console.log(results);
             //comparer le mdp entré avec le mdp encrypté dans la bdd
-            if(!results || !(await bcrypt.compare(password, results[0].mdp))){
+            if(!results || results.length == 0 || !(await bcrypt.compare(password, results[0].mdp))){
                 res.status(401).render('login', {
                     message: 'Email ou mot de passe incorrect'
+                    //message vague pour securite ne pas dire si l'erreur c'est le mail, le mdp, ou les deux
                 })
             } else { //sinon ca veut dire que identifiants ok
                 const id = results[0].id;

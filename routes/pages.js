@@ -18,10 +18,16 @@ router.get('/login', (req, res) => {
 
 // pour acceder à cette page il faut être connecté : verifier qu'il y est un token et verifier que ce token corresponde à l'utilisateur
 router.get('/profile', authController.isLoggedIn, (req, res) => {
-    // console.log(req.message);
+    console.log(req.query);
     //isLoggedIn renvoi req.user et ses données uniquement si connecté
     if(req.user){
-        res.render('profile', {user: req.user});
+        if(req.query.message){
+            res.render('profile', {user: req.user, message: req.query.message, message_color: req.query.message_color});
+        } else if(req.query.deleteConfirmation){
+            res.render('profile', {user: req.user, deleteConfirmation: req.query.deleteConfirmation});
+        } else {
+            res.render('profile', {user: req.user});
+        }
     } else {
         res.redirect('/login')
     }

@@ -22,7 +22,7 @@
                     <li><a href="/admin/panel">Admin Panel</a></li>
                 {{/ifeq}}
                 <li><a href="/profile">Profile</a></li>
-                <li><a href="/auth/logout">Logout</a></li>
+                <li><a class="bg-secondary rounded ml-3" href="/auth/logout">Logout</a></li>
             {{else}}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
@@ -31,17 +31,23 @@
     </nav>
 
     {{#if user}}
-        <div class="container mt-4">
+        <div class="container mt-5">
             <h2>AFFICHAGE DU PARKING : recherche des places disponibles et des places qui nous sont attribuées</h2>
         </div>
     {{else}}
-        <div class="container mt-4">
+        <div class="container mt-5">
             <div class="jumbotron">
                 <h1 class="display-4">Vinci ParkManager</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <p class="lead">Nous vous permettons de savoir quelles sont les places disponibles dans notre parking.<br/>Grâce à cet outil en ligne vous pourrez gagner du temps de navigation !</p>
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <p>Connectez-vous pour accéder au système et trouver un stationnement.</p>
+                <a class="btn btn-primary btn-lg" href="/login" role="button">Login</a>
+
+                <div class="card text-center border-0 mt-4 mb-2">
+                    <div class="card-footer text-muted position-absolute border-0 w-100">
+                        Node MySQL Project : <a href="https://github.com/JoaquimDmt/Node-MySQL-ParkManager" target="_blank">voir sur github</a>
+                    </div>
+                </div>
             </div>
         </div>
     {{/if}}

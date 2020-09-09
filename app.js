@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const bodyParser = require('body-parser');
+
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const hbs = require('hbs');
@@ -20,6 +22,8 @@ db.connect( (error) => {
     }
 });
 
+app.use(bodyParser.json()); //sans body-parser je ne peux pas récupérer les données des "hidden input" quand je submit un form
+
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory)); // make sure express server is using the public directory
 
@@ -36,6 +40,7 @@ app.set('view engine', 'hbs'); // Indique à Express que le moteur de templating
 // defining routes
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/authRouter'));
+app.use('/profile', require('./routes/profileRouter'));
 app.use('/admin', require('./routes/adminRouter'));
 
 // starting server
