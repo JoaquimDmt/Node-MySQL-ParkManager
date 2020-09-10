@@ -11,6 +11,6 @@ router.get('/delete/confirmation', profileController.deleteConfirmation); //page
 
 router.get('/delete/:id', profileController.delete); //delete method ? not working with form
 
-//what is the best way to pass data depending context? :params, ?query or req.body
+//what is the best way to pass data depending context? :params, ?query or req.body ?? moi j'ai utiliser params pour recup id, query pour recup phrases/props, et req.body pour passer les données de l'utilisateur
 
 module.exports = router;

@@ -26,6 +26,7 @@ exports.updateName = async (req, res) => {
         if(error){
             console.log(error);
         } else {
+            console.log("Nom modifé : ",currentName," -> ",newName);
             return res.redirect("/profile");
         }
     });

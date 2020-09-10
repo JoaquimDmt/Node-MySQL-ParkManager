@@ -24,7 +24,7 @@ db.connect( (error) => {
 
 app.use(bodyParser.json()); //sans body-parser je ne peux pas récupérer les données des "hidden input" quand je submit un form
 
-const publicDirectory = path.join(__dirname, './public');
+const publicDirectory = path.join(__dirname, 'public');
 app.use(express.static(publicDirectory)); // make sure express server is using the public directory
 
 // Parse URL-encoded bodies (as sent by HTML forms) / pour récuperer données des formulaires

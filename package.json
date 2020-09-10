@@ -1,7 +1,7 @@
 {
   "name": "parkmanager",
   "version": "1.0.0",
-  "description": "nodejs and mysql mvc crud",
+  "description": "Nodejs & MySQL project w/ security and MVC architecture",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"

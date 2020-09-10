@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
+    
     <title>Vinci ParkManager</title>
     <meta name="description" content="Nodejs/MySQL API with MVC architecture (Parking Management web app)">
     <meta name="author" content="Joaquim Dimitrov">
-    <link rel="icon" href="favicon.ico">
 </head>
 <body>
 
     <nav>
         <h4>ParkManager Corp</h4>
         <ul>
-            <li><a href="/">Accueil</a></li>
             {{#ifeq user.role "ADMIN"}}
-                <li><a href="/admin/panel">Admin Panel</a></li>
+                <li><a class="mr-5" href="/admin/panel">⚙️Admin Panel</a></li>
             {{/ifeq}}
-            <li><a href="/profile">Profile</a></li>
+            <li><a href="/">Accueil</a></li>
+            <li><a class="currentpage" href="#">Profile</a></li>
             <li><a class="bg-secondary rounded ml-3" href="/auth/logout">Logout</a></li>
         </ul>
     </nav>
@@ -50,7 +51,7 @@
                         <form action="/profile/update-name" method="POST">
                             <p class="card-text">
                                 <u>Nom d'utilisateur</u> :
-                                <input id="currentName" name="currentName" type="hidden" value={{user.nom}}>
+                                <input id="currentName" name="currentName" type="hidden" value="{{user.nom}}">
                                 <input value="{{user.nom}}" type="text" class="form-control mail-change" id="newName" name="newName" required="true">
                                 <input id="userId" name="userId" type="hidden" value={{user.id}}>
                                 <button type="submit" class="btn btn-primary align-top">Modifier</button>
