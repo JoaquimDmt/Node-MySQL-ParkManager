@@ -38,10 +38,20 @@
 
         </form>
 
+        <h4>Nombre de places de parking : {{placesNumber}}</h4>
+        <h4>Nombre de places occupées : {{takenPlacesNumber}}</h4>
+        <h4>Nombre de places dispo : {{availablePlacesNumber}}</h4>
+        <h4>Taux d'occupation : {{occupancyRate}} %</h4>
+
         <ul class="list-group my-4">
             {{#each places}}
                 <li class="list-group-item text-body">
                     numéro:{{this.id}} etage:{{this.etage}}
+                    {{#if taken}}
+                        <p class="d-inline-block alert-dark m-0">occupée</p>
+                    {{else}}
+                        <p class="d-inline-block alert-success m-0">libre</p>
+                    {{/if}}
                     <a class="alert-danger" href="/admin/place/delete/{{this.id}}">❌</a>
                 </li>
             {{/each}}

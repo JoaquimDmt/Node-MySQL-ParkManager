@@ -25,28 +25,6 @@ exports.placeCreate = (req, res) => {
     )
 }
 
-exports.getPlaces = async (req, res, next) => {
-    try{
-
-        db.query('SELECT * FROM parking_places', (error, results) => {
-            if(error){
-                console.log(error);
-            } else {
-                if(!results){
-                    return next();
-                }
-                // console.log(results);
-                req.places = results;
-                return next();
-            }
-        })
-
-    } catch (error){
-        console.log(error);
-        return next();
-    }
-}
-
 exports.placeDelete = (req, res) => {
     
     const placeId = req.params.id;
@@ -63,27 +41,4 @@ exports.placeDelete = (req, res) => {
             return res.redirect("/admin/panel");
         }
     }
-)
-}
-
-// exports.isAvailable = async (req, res, next) => {
-//     try{
-
-//         db.query('SELECT id_parking_place FROM occupe', (error, results) => {
-//             if(error){
-//                 console.log(error);
-//             } else {
-//                 if(!results){
-//                     return next();
-//                 }
-//                 // console.log(results);
-//                 req.places = results;
-//                 return next();
-//             }
-//         })
-
-//     } catch (error){
-//         console.log(error);
-//         return next();
-//     }
-// }
+)}

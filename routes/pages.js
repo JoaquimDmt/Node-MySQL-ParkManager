@@ -1,11 +1,14 @@
 const express = require("express");
-const authController = require('../controllers/authController')
+const authController = require('../controllers/authController');
+const parkingController = require('../controllers/parkingController');
 
 const router = express.Router();
 
-router.get('/', authController.isLoggedIn, (req, res) => {
+router.get('/', [authController.isLoggedIn, parkingController.getPlaces, parkingController.getPlacesNumber, parkingController.getOccupiedPlacesNumber], (req, res) => {
     // res.send("<h1>Home Page</h1>")
-    res.render('index', {user: req.user});//pour afficher différement la page index si l'utilisateur est connecté (cf. views/index.hbs)
+    const availablePlacesNumber = req.placesNumber.count - req.takenPlacesNumber.count;
+    
+    res.render('index', {user: req.user, places: req.places, placesNumber: req.placesNumber.count, availablePlacesNumber: availablePlacesNumber});//pour afficher différement la page index si l'utilisateur est connecté (cf. views/index.hbs)
 });
 
 router.get('/register', (req, res) => {
