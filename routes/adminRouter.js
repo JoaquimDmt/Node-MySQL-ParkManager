@@ -15,6 +15,7 @@ router.get('/panel', [authController.isLoggedIn, parkingController.getPlaces, pa
     if(req.user && req.user.role==="ADMIN"){
             const availablePlacesNumber = req.placesNumber.count - req.takenPlacesNumber.count;
             const occupancyRate = (req.takenPlacesNumber.count*100)/req.placesNumber.count;
+            parkingController.isOccupied(req.places); //comments on parkingRouter.js
         
             res.render('admin/panel', {user: req.user, places: req.places, placesNumber: req.placesNumber.count, takenPlacesNumber: req.takenPlacesNumber.count, availablePlacesNumber: availablePlacesNumber, occupancyRate: occupancyRate});
     } else {
@@ -33,7 +34,7 @@ router.post('/place/create', adminController.placeCreate);
 //delete method not working
 router.get('/place/delete/:id', authController.isLoggedIn, (req, res) => {
     if(req.user && req.user.role==="ADMIN"){ //verfier si admin avant
-        console.log("co")
+        // console.log("co")
         adminController.placeDelete(req, res); //si admin alors delete place
     } else {
         console.log("Vous n'avez pas la permission pour effectuer cette requête")

@@ -1,14 +1,15 @@
 const express = require("express");
 const authController = require('../controllers/authController');
-const parkingController = require('../controllers/parkingController');
 
 const router = express.Router();
 
-router.get('/', [authController.isLoggedIn, parkingController.getPlaces, parkingController.getPlacesNumber, parkingController.getOccupiedPlacesNumber], (req, res) => {
+router.get('/', authController.isLoggedIn, (req, res) => {
     // res.send("<h1>Home Page</h1>")
-    const availablePlacesNumber = req.placesNumber.count - req.takenPlacesNumber.count;
-    
-    res.render('index', {user: req.user, places: req.places, placesNumber: req.placesNumber.count, availablePlacesNumber: availablePlacesNumber});//pour afficher différement la page index si l'utilisateur est connecté (cf. views/index.hbs)
+    if(req.user){
+        res.render('index', {user: req.user});//pour afficher différement la page index si l'utilisateur est connecté (cf. views/index.hbs)
+    } else {
+        res.render('index'); //si pas connecté ne pas envoyer de données
+    }
 });
 
 router.get('/register', (req, res) => {
@@ -32,6 +33,7 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
             res.render('profile', {user: req.user});
         }
     } else {
+        console.log("Vous devez être connecté pour accéder à cette page")
         res.redirect('/login')
     }
     //si quelqu'un essaye d'accéder à la page profile et qu'il est connecté c'est bon sinon ramener à la page login (page visible uniquement pour les personnes ayant un compte et étant connectées)

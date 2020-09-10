@@ -42,6 +42,7 @@ app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/authRouter'));
 app.use('/profile', require('./routes/profileRouter'));
 app.use('/admin', require('./routes/adminRouter'));
+app.use('/parking', require('./routes/parkingRouter'));
 
 // starting server
 app.listen(5000, () => {

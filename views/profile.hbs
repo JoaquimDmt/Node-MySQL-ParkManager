@@ -20,7 +20,7 @@
             {{#ifeq user.role "ADMIN"}}
                 <li><a class="mr-5" href="/admin/panel">⚙️Admin Panel</a></li>
             {{/ifeq}}
-            <li><a href="/">Accueil</a></li>
+            <li><a href="/parking">Parking</a></li>
             <li><a class="currentpage" href="#">Profile</a></li>
             <li><a class="bg-secondary rounded ml-3" href="/auth/logout">Logout</a></li>
         </ul>
@@ -84,7 +84,7 @@
 
     {{#if deleteConfirmation}}
         <div class="modal-background"></div>
-        <div class="alert alert-danger deleteConfirmation">
+        <div class="alert alert-danger absolute-center">
             <h3>{{deleteConfirmation}}</h3>
             <div class="text-center mt-3 mb-2"><a class="m-5 text-danger" href="/profile/delete/{{user.id}}">Supprimer</a><a class="m-5" href="/profile">Annuler</a></div>
         </div>

@@ -36,19 +36,7 @@
 
     {{#if user}}
         <div class="container mt-5">
-            <h2 class="text-white">AFFICHAGE DU PARKING : recherche des places disponibles et des places qui nous sont attribuées</h2>
-             <h4 class="text-white">Nombre de places de parking : {{placesNumber}}</h4>
-             <h4 class="text-white">Nombre de places dispo : {{availablePlacesNumber}}</h4>
-            {{#each places}}
-                <li class="list-group-item text-body">
-                    numéro:{{this.id}} etage:{{this.etage}}
-                    {{#if taken}}
-                        <p class="d-inline-block alert-dark m-0">occupée</p>
-                    {{else}}
-                        <p class="d-inline-block alert-success m-0">libre</p>
-                    {{/if}}
-                </li>
-            {{/each}}
+            <a class="alert alert-warning absolute-center font-weight-bold" href="/parking">Acceder au parking</a>
         </div>
     {{else}}
         <div class="container mt-5">
